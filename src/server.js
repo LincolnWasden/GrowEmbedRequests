@@ -43,7 +43,7 @@ app.post('/api/embed/url/metric/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server listening at https://grow-embed-requests.vercel.app/`);
 });
 
 module.exports = app;

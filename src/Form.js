@@ -17,7 +17,7 @@ function Form() {
   useEffect(() => {
     if (apiToken !== "") {
       axios
-        .get(`http://localhost:3001/api/embed/list/metric?token=${apiToken}`)
+        .get(`https://grow-embed-requests.vercel.app/api/embed/list/metric?token=${apiToken}`)
         .then((response) => {
           setMetrics(response.data.data);
         })
@@ -52,7 +52,7 @@ function Form() {
       const config = addRequiredFilters ? { requiredFilters: true } : {};
       axios
         .post(
-          `http://localhost:3001/api/embed/url/metric/${metricId}?token=${apiToken}`,
+          `https://grow-embed-requests.vercel.app/api/embed/url/metric/${metricId}?token=${apiToken}`,
           { config }
         )
         .then((response) => {
@@ -89,7 +89,7 @@ function Form() {
     event.preventDefault();
     axios
       .post(
-        `http://localhost:3001/api/embed/url/metric/${metricId}?token=${apiToken}`,
+        `https://grow-embed-requests.vercel.app/api/embed/url/metric/${metricId}?token=${apiToken}`,
         { config: {} }
       )
       .then((response) => {
