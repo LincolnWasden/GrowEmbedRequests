@@ -5,9 +5,6 @@ import "./Form.css";
 function Form() {
   const [metrics, setMetrics] = useState([]);
   const [apiToken, setApiToken] = useState("");
-  const [metricTitle, setMetricTitle] = useState("");
-  const [metricId, setMetricId] = useState("");
-  const [metricUrl, setMetricUrl] = useState("");
   const [showMetricTitleInput, setShowMetricTitleInput] = useState(false);
   const [selectedMetrics, setSelectedMetrics] = useState([]);
   const [metricUrls, setMetricUrls] = useState([]);
@@ -17,9 +14,10 @@ function Form() {
   useEffect(() => {
     if (apiToken !== "") {
       axios
-        .get(`https://grow-embed-requests.vercel.app/api/embed/list/metric?token=${apiToken}`)
+        .get(`http://localhost:3001/api/embed/list/metric?token=${apiToken}`)
         .then((response) => {
           setMetrics(response.data.data);
+          console.log(response.data)
         })
         .catch((error) => {
           console.error(error);
@@ -52,7 +50,7 @@ function Form() {
       const config = addRequiredFilters ? { requiredFilters: true } : {};
       axios
         .post(
-          `https://grow-embed-requests.vercel.app/api/embed/url/metric/${metricId}?token=${apiToken}`,
+          `http://localhost:3001/api/embed/url/metric/${metricId}?token=${apiToken}`,
           { config }
         )
         .then((response) => {
@@ -68,41 +66,14 @@ function Form() {
     });
   };
 
-  const filteredMetrics = metrics ? metrics.filter((metric) =>
-  metric.title.toLowerCase().includes(searchQuery.toLowerCase())
-) : [];
+  const filteredMetrics = metrics.filter((metric) =>
+    metric.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-
-  const handleGetMetricIdClick = (event) => {
-    event.preventDefault();
-    const metric = metrics.find(
-      (m) => m.title.toLowerCase() === metricTitle.toLowerCase()
-    );
-    if (metric) {
-      setMetricId(metric.id);
-    } else {
-      setMetricId("");
-      console.error(`Metric "${metricTitle}" not found`);
-    }
-  };
-
-  const handleGetMetricUrlClick = (event) => {
-    event.preventDefault();
-    axios
-      .post(
-        `https://grow-embed-requests.vercel.app/api/embed/url/metric/${metricId}?token=${apiToken}`,
-        { config: {} }
-      )
-      .then((response) => {
-        console.log(response.data);
-        setMetricUrl(response.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+//put a alert banner in all red saying this not Grow Sponsored
   return (
     <div className="form-container">
+      
       <div className="form">
         <h1 className="form-heading">Metrics</h1>
         {!showMetricTitleInput && (
@@ -187,11 +158,11 @@ function Form() {
             )}
             {metricUrls.length > 0 && (
               <div className="form-url-list">
-                <h2 className="form-metrics-title">Metric URLs:</h2>
+                <h2 className="form-heading">Metric URLs:</h2>
                 <div>
                   {metricUrls.map((url) => (
                     <div key={url}>
-                      <a href={url} className="form-link">{url}</a>
+                      <a href={url} className="form-metrics-text">{url}</a>
                     </div>
                   ))}
                 </div>
