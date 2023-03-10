@@ -68,9 +68,10 @@ function Form() {
     });
   };
 
-  const filteredMetrics = metrics.filter((metric) =>
-    metric.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredMetrics = metrics ? metrics.filter((metric) =>
+  metric.title.toLowerCase().includes(searchQuery.toLowerCase())
+) : [];
+
 
   const handleGetMetricIdClick = (event) => {
     event.preventDefault();
